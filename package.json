@@ -1,0 +1,47 @@
+{
+  "bin": {
+    "cemu-no-gyro": "./app.js"
+  },
+  "entry point": "app.js",
+  "main": "app.js",
+  "name": "cemu-no-gyro",
+  "version": "1.0.0",
+  "description": "Maps the right stick to motion controls for Cemu.",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "premiere": "O='{\"name\":\"'$npm_package_name'\",\"description\":\"'$npm_package_description'\",\"license_template\":\"'$npm_package_license'\"}' && echo \"${O}\" && curl -u $npm_package_author_name https://api.github.com/user/repos -d \"${O}\" && git init && git add -A && git commit -m $npm_package_version && git remote add origin 'https://github.com/'$npm_package_author_name'/'$npm_package_name'.git' && git pull origin master --allow-unrelated-histories --no-edit -q && git push --set-upstream origin master && git push && git push --tags",
+    "up-outdated": "npm install --save $(npm outdated | cut -d ' ' -f -1 | sed '1d' | sed 's/$/@*/')",
+    "v": "npm version patch --force",
+    "version": "git add -A",
+    "postversion": "git remote | xargs -L1 git push --all && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinton-ashley/cemu-no-gyro.git"
+  },
+  "keywords": [
+    "gyro",
+    "cemuhook",
+    "cemu"
+  ],
+  "author": "quinton-ashley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quinton-ashley/cemu-no-gyro/issues"
+  },
+  "homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "contro": "^2.1.2",
+    "crc": "^3.5.0",
+    "electron-pug": "^2.0.0",
+    "fs-extra": "^7.0.0",
+    "jquery": "^3.3.1",
+    "klaw-sync": "^6.0.0",
+    "long": "^4.0.0",
+    "markdown-it": "^8.4.2",
+    "popper.js": "^1.14.4"
+  },
+  "devDependencies": {}
+}

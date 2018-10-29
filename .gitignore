@@ -1,0 +1,7 @@
+.DS_Store
+dev/*
+usr/*
+node_modules/*
+build/*
+package-lock.json
+*.log
