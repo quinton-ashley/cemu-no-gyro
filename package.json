@@ -1,40 +1,21 @@
 {
+  "author": "quinton-ashley",
   "bin": {
     "cemu-no-gyro": "./app.js"
   },
-  "entry point": "app.js",
-  "main": "app.js",
-  "name": "cemu-no-gyro",
-  "version": "1.0.1",
-  "description": "Maps the right stick to motion controls for Cemu.",
-  "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "premiere": "O='{\"name\":\"'$npm_package_name'\",\"description\":\"'$npm_package_description'\",\"license_template\":\"'$npm_package_license'\"}' && echo \"${O}\" && curl -u $npm_package_author_name https://api.github.com/user/repos -d \"${O}\" && git init && git add -A && git commit -m $npm_package_version && git remote add origin 'https://github.com/'$npm_package_author_name'/'$npm_package_name'.git' && git pull origin master --allow-unrelated-histories --no-edit -q && git push --set-upstream origin master && git push && git push --tags",
-    "up-outdated": "npm install --save $(npm outdated | cut -d ' ' -f -1 | sed '1d' | sed 's/$/@*/')",
-    "rebuild": "npm rebuild --runtime=electron --target=3.0.6 --disturl=https://atom.io/download/atom-shell --abi=64",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "v": "npm version patch --force",
-    "version": "git add -A",
-    "postversion": "git remote | xargs -L1 git push --all && git push --tags && npm publish"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/quinton-ashley/cemu-no-gyro.git"
-  },
-  "keywords": [
-    "gyro",
-    "cemuhook",
-    "cemu"
-  ],
-  "author": "quinton-ashley",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/quinton-ashley/cemu-no-gyro/issues"
   },
-  "homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
+  "build": {
+    "appId": "com.qashto.cemu-no-gyro",
+    "copyright": "Copyright © 2018 Quinton Ashley",
+    "win": {
+      "target": "zip",
+      "publish": [
+        "github"
+      ]
+    }
+  },
   "dependencies": {
     "bootstrap": "^4.1.3",
     "contro": "^2.1.2",
@@ -48,5 +29,34 @@
     "opn": "^5.4.0",
     "popper.js": "^1.14.4"
   },
-  "devDependencies": {}
+  "description": "Maps the right stick to motion controls for Cemu.",
+  "devDependencies": {},
+  "entry point": "app.js",
+  "homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
+  "keywords": [
+    "gyro",
+    "cemuhook",
+    "cemu"
+  ],
+  "license": "MIT",
+  "main": "app.js",
+  "name": "cemu-no-gyro",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinton-ashley/cemu-no-gyro.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "premiere": "O='{\"name\":\"'$npm_package_name'\",\"description\":\"'$npm_package_description'\",\"license_template\":\"'$npm_package_license'\"}' && echo \"${O}\" && curl -u $npm_package_author_name https://api.github.com/user/repos -d \"${O}\" && git init && git add -A && git commit -m $npm_package_version && git remote add origin 'https://github.com/'$npm_package_author_name'/'$npm_package_name'.git' && git pull origin master --allow-unrelated-histories --no-edit -q && git push --set-upstream origin master && git push && git push --tags",
+    "up-outdated": "npm install --save $(npm outdated | cut -d ' ' -f -1 | sed '1d' | sed 's/$/@*/')",
+    "rebuild": "npm rebuild --runtime=electron --target=3.0.6 --disturl=https://atom.io/download/atom-shell --abi=64",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "v": "npm version patch --force",
+    "version": "git add -A",
+    "postversion": "git remote | xargs -L1 git push --all && git push --tags && npm publish"
+  },
+  "version": "1.0.2"
 }
