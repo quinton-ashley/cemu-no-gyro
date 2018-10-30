@@ -22,6 +22,14 @@ module.exports = async function(opt) {
 	window.$ = window.jQuery = $;
 	window.Bootstrap = require('bootstrap');
 
+	let axisesR = ['y'];
+	let gamepadConnected = false;
+	let stickNue = {
+		x: true,
+		y: true
+	};
+	let stickDeadZone = 0.2;
+
 	let files = klawSync(path.join(__rootDir, '/views/md'));
 	for (let file of files) {
 		file = file.path;
@@ -35,92 +43,43 @@ module.exports = async function(opt) {
 		opn(this.href);
 	});
 
-	let gamepadConnected = false;
-	let btnNames = [
-		'a', 'b', 'x', 'y',
-		'up', 'down', 'left', 'right',
-		'view', 'start'
-	];
-	let btns = {};
-	for (let i of btnNames) {
-		btns[i] = gamepad.button(i);
+	function toggleAxis() {
+		let $btn = $(this);
+		let axisR = $(this).attr('id')[2];
+		$btn.toggleClass('enabled');
+		axisesR = [];
+		if ($('#rsx').hasClass('enabled')) {
+			axisesR.push('x');
+		}
+		if ($('#rsy').hasClass('enabled')) {
+			axisesR.push('y');
+		}
 	}
-	let stickNue = {
-		x: true,
-		y: true
-	};
-	let stickDeadZone = 0.2;
-	let btnStates = {};
-	for (let i of btnNames) {
-		btnStates[i] = false;
-	}
-	// Xbox One controller mapped to
-	// Nintendo Switch controller button layout
-	//  Y B  ->  X A
-	// X A  ->  Y B
-	let map = {
-		a: 'b',
-		b: 'a',
-		x: 'y',
-		y: 'x'
-	};
-
-	let noGyroX = true;
+	$('#rsx').click(toggleAxis);
+	$('#rsy').click(toggleAxis);
 
 	async function loop() {
 		if (gamepadConnected || gamepad.isConnected()) {
-			for (let i in btns) {
-				let btn = btns[i];
-				// incomplete maps are okay
-				// no one to one mapping necessary
-				i = map[i] || i;
-
-				let query = btn.query();
-				// if button is not pressed, query is false and unchanged
-				if (!btnStates[i] && !query) {
-					continue;
-				}
-				// if button is held, query is true and unchanged
-				if (btnStates[i] && query) {
-					// log(i + ' button press held');
-					continue;
-				}
-				// save button change
-				btnStates[i] = query;
-				// if button press ended query is false
-				if (!query) {
-					// log(i + ' button press end');
-					continue;
-				}
-				// if button press just started, query is true
-				if (opt.v) {
-					log(i + ' button press start');
-				}
-			}
 			let stickR = gamepad.stick('right').query();
-			let axises = ['y'];
-			if (!noGyroX) {
-				axises.push('x');
-			}
-			for (axis of axises) {
-				if (stickR[axis] > .9) {
-					stickR[axis] = -250 * stickR[axis] + 208
+			for (axisR of axisesR) {
+				if (stickR[axisR] > .9) {
+					stickR[axisR] = -250 * stickR[axisR] + 208
 					stickNue.y = false;
-				} else if (stickR[axis] < -.9) {
-					stickR[axis] = -250 * stickR[axis] - 208
+				} else if (stickR[axisR] < -.9) {
+					stickR[axisR] = -250 * stickR[axisR] - 208
 					stickNue.y = false;
-				} else if (stickR[axis] < -stickDeadZone || stickR[axis] > stickDeadZone) {
-					stickR[axis] = -25 * Math.pow(stickR[axis], 3);
+				} else if (stickR[axisR] < -stickDeadZone || stickR[axisR] > stickDeadZone) {
+					stickR[axisR] = -25 * Math.pow(stickR[axisR], 3);
 					stickNue.y = false;
-				} else if (stickR[axis] < stickDeadZone &&
-					stickR[axis] > -stickDeadZone) {
-					stickNue[axis] = true;
+				} else if (stickR[axisR] < stickDeadZone &&
+					stickR[axisR] > -stickDeadZone) {
+					stickNue[axisR] = true;
 				}
 			}
 			// log(stickR);
 			gyroServer.sendMotionData({
-				x: stickR.y,
-				y: ((noGyroX) ? 0 : stickR.x),
+				x: ((axisesR.includes('y')) ? stickR.y : 0),
+				y: ((!axisesR.includes('x')) ? 0 : stickR.x),
 				z: 0
 			});
 

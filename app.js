@@ -40,8 +40,8 @@ async function createWindow() {
 	}
 
 	mainWindow = new BrowserWindow({
-		width: 3840 / 4,
-		height: 2160 / 4
+		width: 3840 / 8,
+		height: 2160 / 2
 	});
 
 	mainWindow.loadURL(`file://${__dirname}/views/pug/index.pug`);
@@ -65,11 +65,7 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
-	// On macOS it is common for applications and their menu bar
-	// to stay active until the user quits explicitly with Cmd + Q
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+	app.quit();
 });
 
 app.on('activate', function() {

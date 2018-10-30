@@ -3,3 +3,16 @@ html {
 	color: #ddd;
 	background-color: #000;
 }
+
+.btn {
+	background-color: #044;
+}
+
+.btn.enabled {
+	background-color: #0cc;
+}
+
+a,
+a:hover {
+	color: #0cc;
+}
