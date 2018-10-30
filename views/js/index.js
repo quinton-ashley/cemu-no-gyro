@@ -79,7 +79,7 @@ module.exports = async function(opt) {
 			// log(stickR);
 			gyroServer.sendMotionData({
 				x: ((axisesR.includes('y')) ? stickR.y : 0),
-				y: ((!axisesR.includes('x')) ? 0 : stickR.x),
+				y: ((!axisesR.includes('x')) ? 0 : -stickR.x),
 				z: 0
 			});
 

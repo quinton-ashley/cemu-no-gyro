@@ -2,15 +2,11 @@
 
 Maps the right analog stick's vertical values to gyro motion controls which get sent to Cemu.  Useful for playing Splatoon without motion controls!
 
-### Required
-
--   Cemu
--   cemuhook
-
 ### Usage
 
+-   Install Cemu and cemuhook
 -   Download [cemu-no-gyro](https://github.com/quinton-ashley/cemu-no-gyro/releases)
--   Run cemu-no-gyro
+-   Run cemu-no-gyro.exe
 -   In the Cemu menu click on Options->GamePad motion source->DSU1->By Slot
 -   Tap any button on your controller and it will be auto-detected
 -   Load the game and enjoy it without motion controls!
