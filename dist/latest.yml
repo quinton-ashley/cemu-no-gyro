@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: cemu-no-gyro-setup-1.0.0.exe
+    sha512: 93GOGrckuCJWBTrHfEnncFgT5WjP+/jQQNHPR12p+TCsCC4BT/QGhMmxOmbYZGX+sJtY5fA3uo7GW30+jDXTpw==
+    size: 39928823
+path: cemu-no-gyro-setup-1.0.0.exe
+sha512: 93GOGrckuCJWBTrHfEnncFgT5WjP+/jQQNHPR12p+TCsCC4BT/QGhMmxOmbYZGX+sJtY5fA3uo7GW30+jDXTpw==
+releaseDate: '2018-10-30T08:17:37.984Z'

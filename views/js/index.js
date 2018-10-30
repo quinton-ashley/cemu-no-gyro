@@ -5,6 +5,7 @@ module.exports = async function(opt) {
 
 	const gyroServer = require('./gyroServer.js');
 	const fs = require('fs-extra');
+	const opn = require('opn');
 	const path = require('path');
 	const klawSync = require('klaw-sync');
 	const md = require('markdown-it')();
@@ -29,18 +30,10 @@ module.exports = async function(opt) {
 		file = path.parse(file);
 		$('#' + file.name).prepend(html);
 	}
-
-	let gyro = {
-		x: 0,
-		y: 0,
-		z: 0
-	};
-
-	let gyroPos = {
-		x: 0,
-		y: 0,
-		z: 0
-	};
+	$(document).on('click', 'a[href^="http"]', function(event) {
+		event.preventDefault();
+		opn(this.href);
+	});
 
 	let gamepadConnected = false;
 	let btnNames = [
@@ -71,6 +64,8 @@ module.exports = async function(opt) {
 		x: 'y',
 		y: 'x'
 	};
+
+	let noGyroX = true;
 
 	async function loop() {
 		if (gamepadConnected || gamepad.isConnected()) {
@@ -103,23 +98,35 @@ module.exports = async function(opt) {
 				}
 			}
 			let stickR = gamepad.stick('right').query();
-			if (stickR.y < -stickDeadZone || stickR.y > stickDeadZone) {
-				stickR.y = -25 * Math.pow(stickR.y, 3)
-				stickNue.y = false;
+			let axises = ['y'];
+			if (!noGyroX) {
+				axises.push('x');
 			}
-			if (stickR.y < stickDeadZone &&
-				stickR.y > -stickDeadZone) {
-				gyro.y = 0;
-				stickNue.y = true;
+			for (axis of axises) {
+				if (stickR[axis] > .9) {
+					stickR[axis] = -250 * stickR[axis] + 208
+					stickNue.y = false;
+				} else if (stickR[axis] < -.9) {
+					stickR[axis] = -250 * stickR[axis] - 208
+					stickNue.y = false;
+				} else if (stickR[axis] < -stickDeadZone || stickR[axis] > stickDeadZone) {
+					stickR[axis] = -25 * Math.pow(stickR[axis], 3);
+					stickNue.y = false;
+				} else if (stickR[axis] < stickDeadZone &&
+					stickR[axis] > -stickDeadZone) {
+					stickNue[axis] = true;
+				}
 			}
+			// log(stickR);
 			gyroServer.sendMotionData({
 				x: stickR.y,
-				y: 0,
+				y: ((noGyroX) ? 0 : stickR.x),
 				z: 0
 			});
 
 			if (!gamepadConnected) {
 				log('gamepad connected!');
+				$('#gamepadIndicator').text('Gamepad Connected!');
 				gamepadConnected = true;
 			}
 		}
