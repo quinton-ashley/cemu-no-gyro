@@ -22,11 +22,17 @@ module.exports = async function(opt) {
 	window.$ = window.jQuery = $;
 	window.Bootstrap = require('bootstrap');
 
-	let axisesR = ['y'];
+	let axises = ['x', 'y', 'z'];
+	let invert = {
+		x: 1,
+		y: 1,
+		z: 1
+	};
 	let gamepadConnected = false;
-	let stickNue = {
+	let inNuetralPos = {
 		x: true,
-		y: true
+		y: true,
+		z: true
 	};
 	let stickDeadZone = 0.2;
 
@@ -45,43 +51,66 @@ module.exports = async function(opt) {
 
 	function toggleAxis() {
 		let $btn = $(this);
-		let axisR = $(this).attr('id')[2];
 		$btn.toggleClass('enabled');
-		axisesR = [];
-		if ($('#rsx').hasClass('enabled')) {
-			axisesR.push('x');
+		axises = [];
+		if ($('#gyroX').hasClass('enabled')) {
+			axises.push('x');
 		}
-		if ($('#rsy').hasClass('enabled')) {
-			axisesR.push('y');
+		if ($('#gyroY').hasClass('enabled')) {
+			axises.push('y');
+		}
+		if ($('#gyroZ').hasClass('enabled')) {
+			axises.push('z');
 		}
 	}
-	$('#rsx').click(toggleAxis);
-	$('#rsy').click(toggleAxis);
+	$('#gyroX').click(toggleAxis);
+	$('#gyroY').click(toggleAxis);
+	$('#gyroZ').click(toggleAxis);
+
+	function toggleControls() {
+		let $btn = $(this);
+		let axis = $btn.attr('id')[6].toLowerCase();
+		$btn.toggleClass('enabled');
+		if ($btn.hasClass('enabled')) {
+			invert[axis] = 1;
+			$btn.text(axis.toUpperCase() + ' normal');
+		} else {
+			invert[axis] = -1;
+			$btn.text(axis.toUpperCase() + ' inverted');
+		}
+		log(invert);
+	}
+	$('#invertX').click(toggleControls);
+	$('#invertY').click(toggleControls);
+	$('#invertZ').click(toggleControls);
 
 	async function loop() {
 		if (gamepadConnected || gamepad.isConnected()) {
+			let stickL = gamepad.stick('left').query();
 			let stickR = gamepad.stick('right').query();
-			for (axisR of axisesR) {
-				if (stickR[axisR] > .9) {
-					stickR[axisR] = -250 * stickR[axisR] + 208
-					stickNue.y = false;
-				} else if (stickR[axisR] < -.9) {
-					stickR[axisR] = -250 * stickR[axisR] - 208
-					stickNue.y = false;
-				} else if (stickR[axisR] < -stickDeadZone || stickR[axisR] > stickDeadZone) {
-					stickR[axisR] = -25 * Math.pow(stickR[axisR], 3);
-					stickNue.y = false;
-				} else if (stickR[axisR] < stickDeadZone &&
-					stickR[axisR] > -stickDeadZone) {
-					stickNue[axisR] = true;
+			let gyro = {
+				x: ((axises.includes('x')) ? stickR.y : 0),
+				y: ((axises.includes('y')) ? stickR.x : 0),
+				z: ((axises.includes('z')) ? stickL.x : 0)
+			};
+			for (axis of axises) {
+				if (gyro[axis] > .9) {
+					gyro[axis] = -250 * gyro[axis] + 208
+					inNuetralPos[axis] = false;
+				} else if (gyro[axis] < -.9) {
+					gyro[axis] = -250 * gyro[axis] - 208
+					inNuetralPos[axis] = false;
+				} else if (gyro[axis] < -stickDeadZone || gyro[axis] > stickDeadZone) {
+					gyro[axis] = -25 * Math.pow(gyro[axis], 3);
+					inNuetralPos[axis] = false;
+				} else if (gyro[axis] < stickDeadZone &&
+					gyro[axis] > -stickDeadZone) {
+					inNuetralPos[axis] = true;
 				}
+				gyro[axis] *= invert[axis];
 			}
-			// log(stickR);
-			gyroServer.sendMotionData({
-				x: ((axisesR.includes('y')) ? stickR.y : 0),
-				y: ((!axisesR.includes('x')) ? 0 : -stickR.x),
-				z: 0
-			});
+			gyro.y *= -1;
+			gyroServer.sendMotionData(gyro);
 
 			if (!gamepadConnected) {
 				log('gamepad connected!');

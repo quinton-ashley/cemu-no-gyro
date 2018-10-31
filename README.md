@@ -1,6 +1,6 @@
 # cemu-no-gyro
 
-Converts the right analog stick position values to gyro motion controls values and sends them to Cemu via cemuhook.  Although you can disable motion controls in some games like Splatoon, this app could be useful for games that require them.  For example, you could solve motion control puzzles in Legend of Zelda: Breath of the Wild using only an Xbox One controller with cemu-no-gyro!
+Converts the analog stick position values to gyro motion controls values and sends them to Cemu via cemuhook.  Although you can disable motion controls in some games like Splatoon, this app could be useful for games that require them.  For example, you could solve motion control puzzles in Legend of Zelda: Breath of the Wild using only an Xbox One controller with cemu-no-gyro!
 
 ## Usage
 
@@ -11,9 +11,9 @@ Converts the right analog stick position values to gyro motion controls values a
 -   Tap any button on your controller and it will be auto-detected
 -   Load the game and enjoy it without motion controls!
 
-## Features
+## Settings
 
-In the cemu-no-gyro settings you can individually toggle on/off the x and y axis of gyro rotation.
+You can individually toggle on/off each axis of gyro rotation and toggle normal or inverted controls.
 
 ## Please consider donating!
 
