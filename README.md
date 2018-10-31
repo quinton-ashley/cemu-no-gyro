@@ -1,6 +1,6 @@
 # cemu-no-gyro
 
-Maps the right analog stick's vertical values to gyro motion controls which get sent to Cemu.  Useful for playing Splatoon without motion controls!
+Maps the right analog stick's vertical values to gyro motion controls which get sent to Cemu.  Although games like Splatoon have the ability to disable motion controls this app could be useful for games that don't.
 
 ### Usage
 
