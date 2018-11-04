@@ -22,6 +22,15 @@ module.exports = async function(opt) {
 	window.$ = window.jQuery = $;
 	window.Bootstrap = require('bootstrap');
 
+	let btnNames = [
+		'lt', 'rt'
+	];
+	let btns = {};
+	for (let i of btnNames) {
+		btns[i] = gamepad.button(i);
+	}
+	let btnStates = {};
+	let speedShift = true;
 	let axises = ['x', 'y', 'z'];
 	let invert = {
 		x: 1,
@@ -84,8 +93,45 @@ module.exports = async function(opt) {
 	$('#invertY').click(toggleControls);
 	$('#invertZ').click(toggleControls);
 
+	function toggleSpeedShifters() {
+		let $btn = $(this);
+		$btn.toggleClass('enabled');
+		speedShift = $btn.hasClass('enabled');
+	}
+	$('#speedShift').click(toggleSpeedShifters);
+
 	async function loop() {
 		if (gamepadConnected || gamepad.isConnected()) {
+			let multi = 1;
+			for (let i in btns) {
+				let btn = btns[i];
+				let query = btn.query();
+				// if button is not pressed, query is false and unchanged
+				if (!btnStates[i] && !query) {
+					continue;
+				}
+				// if button is held, query is true and unchanged
+				if (btnStates[i] && query) {
+					// log(i + ' button press held');
+					if (i == 'lt') {
+						multi = .5;
+					} else if (i == 'rt') {
+						multi = 5;
+					}
+					continue;
+				}
+				// save button state change
+				btnStates[i] = query;
+				// if button press ended query is false
+				if (!query) {
+					// log(i + ' button press end');
+					continue;
+				}
+				// if button press just started, query is true
+				if (opt.v) {
+					log(i + ' button press start');
+				}
+			}
 			let stickL = gamepad.stick('left').query();
 			let stickR = gamepad.stick('right').query();
 			let gyro = {
@@ -108,6 +154,9 @@ module.exports = async function(opt) {
 					inNuetralPos[axis] = true;
 				}
 				gyro[axis] *= invert[axis];
+				if (speedShift) {
+					gyro[axis] *= multi;
+				}
 			}
 			gyro.y *= -1;
 			gyroServer.sendMotionData(gyro);
