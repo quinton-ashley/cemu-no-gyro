@@ -229,7 +229,7 @@ module.exports = async function(opt) {
 				) {
 					let url = "http://" + interfaces[k][i].address + ":8080";
 					log(url);
-					$('#phoneURL').text($('#phoneURL').text() + url);
+					$('#phoneURL').text($('#phoneURL').text() + url + ' ');
 				}
 			}
 		}
