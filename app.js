@@ -40,7 +40,7 @@ async function createWindow() {
 	}
 
 	mainWindow = new BrowserWindow({
-		width: 3840 / 8,
+		width: 3840 / 4,
 		height: 2160 / 2
 	});
 

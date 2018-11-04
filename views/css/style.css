@@ -12,6 +12,10 @@ html {
 	background-color: #0cc;
 }
 
+.text-align-center {
+	text-align: center;
+}
+
 a,
 a:hover {
 	color: #0cc;

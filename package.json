@@ -21,13 +21,15 @@
     "contro": "^2.1.2",
     "crc": "^3.5.0",
     "electron-pug": "^2.0.0",
+    "express": "^4.16.4",
     "fs-extra": "^7.0.0",
     "jquery": "^3.3.1",
     "klaw-sync": "^6.0.0",
     "long": "^4.0.0",
     "markdown-it": "^8.4.2",
     "opn": "^5.4.0",
-    "popper.js": "^1.14.4"
+    "popper.js": "^1.14.4",
+    "ws": "^6.1.0"
   },
   "description": "Maps the right stick to motion controls for Cemu.",
   "devDependencies": {},
@@ -58,5 +60,5 @@
     "version": "git add -A",
     "postversion": "git remote | xargs -L1 git push --all && git push --tags && npm publish"
   },
-  "version": "1.0.9"
+  "version": "1.0.10"
 }

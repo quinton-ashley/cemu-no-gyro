@@ -187,9 +187,10 @@ const GyroServer = function(opt) {
 		}
 	});
 
-	this.sendMotionData = function(gyro, accelerometer) {
+	this.sendMotionData = function(gyro, accelerometer, motionTimestamp) {
 		accelerometer = accelerometer || {};
-		let motionTimestamp = long.fromNumber(Date.now() * 1000, true);
+		motionTimestamp = motionTimestamp || Date.now() * 1000;
+		motionTimestamp = long.fromNumber(motionTimestamp, true);
 		let client = connectedClient;
 		if (client === null || Date.now() - lastRequestAt > clientTimeoutLimit)
 			return;
