@@ -7,10 +7,27 @@
     "url": "https://github.com/quinton-ashley/cemu-no-gyro/issues"
   },
   "build": {
-    "appId": "com.qashto.cemu-no-gyro",
+    "appId": "com.qashto.bottlenose",
     "copyright": "Copyright © 2018 Quinton Ashley",
+    "electronVersion": "5.0.5",
+    "electronDownload": {
+      "version": "5.0.5"
+    },
     "win": {
-      "target": "zip",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "publish": [
         "github"
       ]
@@ -67,5 +84,5 @@
     "postversion": "git push",
     "V": "git push origin $npm_package_version && npm publish"
   },
-  "version": "1.0.13"
+  "version": "1.0.14"
 }
