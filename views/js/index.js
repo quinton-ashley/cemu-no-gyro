@@ -194,7 +194,7 @@ module.exports = async function(arg) {
 	let xps = express();
 
 	// set up the template engine
-	xps.set('views', './views');
+	xps.set('views', __rootDir + '/views');
 	xps.set('view engine', 'pug');
 	xps.use("/js", express.static(path.join(__dirname, '../js')));
 
