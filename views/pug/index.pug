@@ -6,29 +6,29 @@ link(rel='stylesheet' type='text/css' href=node_modules + '/bootstrap/dist/css/b
 link(rel='stylesheet' type='text/css' href='../css/style.css')
 title= title
 body.container
-  .row
-    #setup.col-12
-    .col-12: .row.justify-content-center
-      button#speedShift.col.btn.enabled Use Triggers for Speed Shifting
-    h2.col-12 Toggle Gryo Axises
-    .col-4: .row.justify-content-center
-      button#gyroX.col.btn.enabled X (right stick y axis)
-    .col-4: .row.justify-content-center
-      button#gyroY.col.btn.enabled Y (right stick x axis)
-    .col-4: .row.justify-content-center
-      button#gyroZ.col.btn.enabled Z (left stick x axis)
-    h2.col-12 Normal/Invert Gyro Controls
-    .col-4: .row.justify-content-center
-      button#invertX.col.btn.enabled X normal
-    .col-4: .row.justify-content-center
-      button#invertY.col.btn.enabled Y normal
-    .col-4: .row.justify-content-center
-      button#invertZ.col.btn.enabled Z normal
-    h2#gamepadIndicator.col-12 Gamepad not connected
-    p.col-12.text-align-center ~~~~~~~~~~~~~~~~~~~~
-    h2.col-12 Phone Gyro Web Connection
-    p.col-12 Open this URL on your phone to play with real motion controls:
-    p#phoneURL.col-12
-    h2#phoneIndicator.col-12 Phone not connected
+	.row
+		#setup.col-12
+		.col-12: .row.justify-content-center
+			button#speedShift.col.btn.enabled Use Triggers for Speed Shifting
+		h2.col-12 Toggle Gryo Axises
+		.col-4: .row.justify-content-center
+			button#gyroX.col.btn.enabled X (right stick y axis)
+		.col-4: .row.justify-content-center
+			button#gyroY.col.btn.enabled Y (right stick x axis)
+		.col-4: .row.justify-content-center
+			button#gyroZ.col.btn.enabled Z (left stick x axis)
+		h2.col-12 Normal/Invert Gyro Controls
+		.col-4: .row.justify-content-center
+			button#invertX.col.btn.enabled X normal
+		.col-4: .row.justify-content-center
+			button#invertY.col.btn.enabled Y normal
+		.col-4: .row.justify-content-center
+			button#invertZ.col.btn.enabled Z normal
+		h2#gamepadIndicator.col-12 Gamepad not connected
+		p.col-12.text-align-center ~~~~~~~~~~~~~~~~~~~~
+		h2.col-12 Phone Gyro Web Connection
+		p.col-12 Open this URL on your phone to play with real motion controls:
+		p#phoneURL.col-12
+		h2#phoneIndicator.col-12 Phone not connected
 script.
-  require('../js/index.js')({__rootDir:'#{__rootDir}'});
+	require('../js/index.js')(JSON.parse('#{arg}'.replace(/&quot;/g, '"')));

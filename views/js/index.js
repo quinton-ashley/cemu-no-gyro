@@ -1,14 +1,8 @@
-module.exports = async function(opt) {
-	global.__rootDir = opt.__rootDir;
-	opt.v = false;
-	const log = console.log;
+module.exports = async function(arg) {
+	await require(arg.__rootDir + '/core/setup.js')(arg);
+	log('version: ' + pkg.version);
 
 	const gyroServer = require('./gyroServer.js');
-	const fs = require('fs-extra');
-	const opn = require('opn');
-	const path = require('path');
-	const klawSync = require('klaw-sync');
-	const md = require('markdown-it')();
 	const {
 		Mouse,
 		Keyboard,
@@ -20,10 +14,6 @@ module.exports = async function(opt) {
 
 	const http = require("http");
 	const WebSocket = require("ws");
-
-	const $ = require('jquery');
-	window.$ = window.jQuery = $;
-	window.Bootstrap = require('bootstrap');
 
 	let btnNames = [
 		'lt', 'rt'
@@ -48,11 +38,10 @@ module.exports = async function(opt) {
 	};
 	let stickDeadZone = 0.2;
 
-	let files = klawSync(path.join(__rootDir, '/views/md'));
+	let files = await klaw(path.join(__rootDir, '/views/md'));
 	for (let file of files) {
-		file = file.path;
 		let html = await fs.readFile(file, 'utf8');
-		html = '<div class="md">' + md.render(html) + '</div>';
+		html = '<div class="md">' + md(html) + '</div>';
 		file = path.parse(file);
 		$('#' + file.name).prepend(html);
 	}
