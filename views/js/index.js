@@ -120,7 +120,7 @@ module.exports = async function(arg) {
 					continue;
 				}
 				// if button press just started, query is true
-				if (opt.v) {
+				if (arg.v) {
 					log(i + ' button press start');
 				}
 			}
