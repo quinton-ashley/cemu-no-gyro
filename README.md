@@ -22,6 +22,12 @@ cemu-no-gyro lets you play motion control games without motion controls on Cemu.
 
 You can individually toggle on/off each axis of gyro rotation and toggle normal or inverted controls.  In addition to fine grain control with the analog sticks you can hold the left trigger for half speed and hold the right trigger for 5x speed.  You can toggle the trigger speed shift functionality on/off too.
 
+## My thoughts on Motion Controls
+
+I really hope that the next Xbox controller will have motion controls because I want to play games like Splatoon with a gyro. I prefer the Gamecube/Xbox style stick layout and the Xbox One controller feels the best in my hands but it's unfortunate they lack a gyro for fine grain motion control. Even though I made cemu-no-gyro, I wish it wasn't necessary.
+
+Watch this video ["Motion Control and the Rejection of Progress"](https://youtu.be/binPB4YbWmM) by Nerrel for more info.
+
 ## Please consider donating!
 
 If you appreciate my work and will continue to use this app please pay for it by donating an amount of your choosing.  Thank you!
