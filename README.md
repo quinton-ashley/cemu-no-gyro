@@ -1,5 +1,7 @@
 # cemu-no-gyro
 
+DOES NOT WORK with Cemu ~v1.20 and above. Have not tested used this app myself in a long time, sorry.
+
 cemu-no-gyro lets you play motion control games without motion controls on Cemu.  It converts your controller's analog stick position values to faked gyro motion controls values and sends them to Cemu via cemuhook.  Although you can disable motion controls in some games like Splatoon, this app could be useful for games that require them.  For example, you could solve motion control puzzles in Legend of Zelda: Breath of the Wild using only an Xbox One controller with cemu-no-gyro!  You can also use your phone as a real motion control source without downloading an app via local web networking.  In BOTW if you disable motion control aiming you can keep cemu-no-gyro running at all times, not just during shrines.  It will have no effect on playing the rest of the game.
 
 ## Usage
