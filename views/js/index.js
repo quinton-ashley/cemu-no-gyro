@@ -1,5 +1,5 @@
 module.exports = async function(arg) {
-	await require(arg.__rootDir + '/core/setup.js')(arg);
+	await require(arg.__root + '/core/setup.js')(arg);
 	log('version: ' + pkg.version);
 
 	const gyroServer = require('./gyroServer.js');
@@ -38,7 +38,7 @@ module.exports = async function(arg) {
 	};
 	let stickDeadZone = 0.2;
 
-	let files = await klaw(path.join(__rootDir, '/views/md'));
+	let files = await klaw(path.join(__root, '/views/md'));
 	for (let file of files) {
 		let html = await fs.readFile(file, 'utf8');
 		html = '<div class="md">' + md(html) + '</div>';
@@ -194,7 +194,7 @@ module.exports = async function(arg) {
 	let xps = express();
 
 	// set up the template engine
-	xps.set('views', __rootDir + '/views');
+	xps.set('views', __root + '/views');
 	xps.set('view engine', 'pug');
 	xps.use("/js", express.static(path.join(__dirname, '../js')));
 

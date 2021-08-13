@@ -2,8 +2,9 @@ module.exports = async function(arg) {
 	global.arg = arg;
 	global.log = console.log;
 	global.er = console.error;
-	global.__rootDir = arg.__rootDir;
-	global.pkg = require(__rootDir + '/package.json');
+	global.__root = arg.__root;
+	global.node_modules = arg.node_modules;
+	global.pkg = require(__root + '/package.json');
 
 	global.delay = require('delay');
 	global.fs = require('fs-extra');
@@ -55,9 +56,9 @@ module.exports = async function(arg) {
 
 	global.electron = require('electron').remote;
 	global.app = electron.app;
-	global.dialog = electron.dialog;
+	global.dialog = {};
 
-	dialog.select = function(opt) {
+	dialog.select = async function(opt) {
 		opt = opt || {};
 		let files = [];
 		if (opt.types || opt.type) {
@@ -84,7 +85,8 @@ module.exports = async function(arg) {
 		opt.title = opt.msg;
 		opt.message = opt.msg;
 		try {
-			files = dialog.showOpenDialog(opt);
+			files = await electron.dialog.showOpenDialog(opt);
+			files = files.filePaths;
 		} catch (ror) {
 			er(ror);
 		}
@@ -96,26 +98,26 @@ module.exports = async function(arg) {
 		return (files && files.length == 1) ? files[0] : files;
 	};
 
-	dialog.selectFile = function(msg, opt) {
+	dialog.selectFile = async function(msg, opt) {
 		opt = opt || {};
 		opt.type = 'file';
 		opt.msg = 'Select File: ' + msg;
-		return dialog.select(opt);
+		return await dialog.select(opt);
 	};
 
-	dialog.selectFiles = function(msg, opt) {
+	dialog.selectFiles = async function(msg, opt) {
 		opt = opt || {};
 		opt.type = 'files';
 		opt.msg = 'Select Files: ' + msg;
-		return dialog.select(opt);
+		return await dialog.select(opt);
 	};
 	dialog.selectMulti = dialog.selectFiles;
 
-	dialog.selectDir = function(msg, opt) {
+	dialog.selectDir = async function(msg, opt) {
 		opt = opt || {};
 		opt.type = 'dir';
 		opt.msg = 'Select Folder: ' + msg;
-		return dialog.select(opt);
+		return await dialog.select(opt);
 	};
 	dialog.selectFolder = dialog.selectDir;
 
@@ -137,32 +139,30 @@ module.exports = async function(arg) {
 		return str;
 	};
 
-	try {
-		global.Mousetrap = require('mousetrap');
+	global.Mousetrap = require('mousetrap');
 
-		let toggleDev;
-		if (mac) toggleDev = ['command+option+i', 'command+shift+i'];
-		if (win) toggleDev = ['ctrl+alt+i', 'ctrl+shift+i'];
+	let toggleDev;
+	if (mac) toggleDev = ['command+option+i', 'command+shift+i'];
+	if (win) toggleDev = ['ctrl+alt+i', 'ctrl+shift+i'];
 
-		Mousetrap.bind(toggleDev, function() {
-			electron.getCurrentWindow().toggleDevTools();
-			return false;
-		});
-		Mousetrap.bind(['command+r', 'ctrl+r'], function() {
-			electron.getCurrentWindow().reload();
-			return false;
-		});
-		Mousetrap.bind('space', function() {
-			return false;
-		});
+	Mousetrap.bind(toggleDev, function() {
+		electron.getCurrentWindow().toggleDevTools();
+		return false;
+	});
+	Mousetrap.bind(['command+r', 'ctrl+r'], function() {
+		electron.getCurrentWindow().reload();
+		return false;
+	});
+	Mousetrap.bind('space', function() {
+		return false;
+	});
 
-		global.cui = require('contro-ui');
-		// global.cui = require('./contro-ui.js');
+	global.cui = require('contro-ui');
+	// global.cui = require('./contro-ui.js');
 
-		let directions = ['up', 'down', 'left', 'right'];
-		for (let direction of directions) {
-			cui.bind(direction, direction);
-		}
-		cui.bind(['command+w', 'ctrl+w', 'command+q', 'ctrl+q'], 'quit');
-	} catch (ror) {}
+	let directions = ['up', 'down', 'left', 'right'];
+	for (let direction of directions) {
+		cui.keyPress(direction, direction);
+	}
+	cui.keyPress(['command+w', 'ctrl+w', 'command+q', 'ctrl+q'], 'quit');
 };
