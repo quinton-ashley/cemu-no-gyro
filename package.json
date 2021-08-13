@@ -1,90 +1,78 @@
 {
-  "author": "quinton-ashley",
-  "bin": {
-    "cemu-no-gyro": "./app.js"
-  },
-  "bugs": {
-    "url": "https://github.com/quinton-ashley/cemu-no-gyro/issues"
-  },
-  "build": {
-    "appId": "com.qashto.bottlenose",
-    "copyright": "Copyright © 2018 Quinton Ashley",
-    "electronVersion": "7.1.1",
-    "electronDownload": {
-      "version": "7.1.1"
-    },
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "zip",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "publish": [
-        "github"
-      ]
-    }
-  },
-  "dependencies": {
-    "await-spawn": "^2.1.2",
-    "bootstrap": "^4.6.0",
-    "contro": "^2.2.0",
-    "contro-ui": "^3.3.5",
-    "crc": "^3.5.0",
-    "delay": "^4.4.1",
-    "electron-pug": "^2.0.0",
-    "express": "^4.16.4",
-    "fs-extra": "^8.1.0",
-    "jquery": "^3.6.0",
-    "klaw": "^3.0.0",
-    "long": "^4.0.0",
-    "markdown-it": "^9.1.0",
-    "minimist": "^1.2.5",
-    "mousetrap": "^1.6.5",
-    "open": "^6.4.0",
-    "popper.js": "^1.16.1",
-    "tether": "^1.4.7",
-    "ws": "^7.5.3"
-  },
-  "description": "Maps the right stick to motion controls for Cemu.",
-  "devDependencies": {},
-  "entry point": "app.js",
-  "homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
-  "keywords": [
-    "gyro",
-    "cemuhook",
-    "cemu"
-  ],
-  "license": "MIT",
-  "main": "app.js",
-  "name": "cemu-no-gyro",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/quinton-ashley/cemu-no-gyro.git"
-  },
-  "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "up-outdated": "npm install --save $(npm outdated | cut -d ' ' -f -1 | sed '1d' | sed 's/$/@*/')",
-    "rebuild": "npm rebuild --runtime=electron --target=7.1.1 --disturl=https://atom.io/download/atom-shell --abi=64",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder -m && electron-builder -w && electron-builder -l",
-    "gh-publish": "electron-builder -m -l -w -p always",
-    "postinstall": "electron-builder install-app-deps | electron-rebuild",
-    "delete-tags": "git tag | xargs git tag -d",
-    "delete-tags-remote": "git tag -l | xargs -n 1 git push --delete origin",
-    "v": "npm version patch --force",
-    "version": "git add -A",
-    "postversion": "git push",
-    "V": "git push origin $npm_package_version && npm publish"
-  },
-  "version": "1.0.17"
+	"author": "quinton-ashley",
+	"bin": {
+		"cemu-no-gyro": "./app.js"
+	},
+	"bugs": {
+		"url": "https://github.com/quinton-ashley/cemu-no-gyro/issues"
+	},
+	"build": {
+		"appId": "com.qashto.cemu-no-gyro",
+		"copyright": "Copyright © 2018-2021 Quinton Ashley",
+		"electronVersion": "7.1.1",
+		"electronDownload": {
+			"version": "7.1.1"
+		},
+		"win": {
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"x64"
+					]
+				}
+			],
+			"publish": [
+				"github"
+			]
+		}
+	},
+	"dependencies": {
+		"@popperjs/core": "^2.9.3",
+		"await-spawn": "^4.0.2",
+		"bootstrap": "^5.1.0",
+		"contro": "^2.2.0",
+		"contro-ui": "^3.3.5",
+		"crc": "^3.5.0",
+		"delay": "^5.0.0",
+		"electron-pug": "^2.0.0",
+		"express": "^4.16.4",
+		"fs-extra": "^10.0.0",
+		"jquery": "^3.6.0",
+		"klaw": "^3.0.0",
+		"long": "^4.0.0",
+		"markdown-it": "^12.2.0",
+		"minimist": "^1.2.5",
+		"mousetrap": "^1.6.5",
+		"open": "^8.2.1",
+		"popper.js": "^1.16.1",
+		"tether": "^2.0.0",
+		"ws": "^8.1.0"
+	},
+	"description": "Maps the right stick to motion controls for Cemu.",
+	"devDependencies": {},
+	"entry point": "app.js",
+	"homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
+	"keywords": [
+		"gyro",
+		"cemuhook",
+		"cemu"
+	],
+	"license": "MIT",
+	"main": "app.js",
+	"name": "cemu-no-gyro",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/quinton-ashley/cemu-no-gyro.git"
+	},
+	"scripts": {
+		"start": "electron . --dev",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dist": "electron-builder -w",
+		"v": "npm version patch --force",
+		"version": "git add -A",
+		"postversion": "git push",
+		"V": "git push origin $npm_package_version && npm publish"
+	},
+	"version": "1.0.18"
 }

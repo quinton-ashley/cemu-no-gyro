@@ -1,23 +1,15 @@
-module.exports = async function(arg) {
+module.exports = async function (arg) {
 	await require(arg.__root + '/core/setup.js')(arg);
 	log('version: ' + pkg.version);
 
 	const gyroServer = require('./gyroServer.js');
-	const {
-		Mouse,
-		Keyboard,
-		Gamepad,
-		or,
-		and
-	} = require('contro');
+	const { Mouse, Keyboard, Gamepad, or, and } = require('contro');
 	let gamepad = new Gamepad();
 
-	const http = require("http");
-	const WebSocket = require("ws");
+	const http = require('http');
+	const WebSocket = require('ws');
 
-	let btnNames = [
-		'lt', 'rt'
-	];
+	let btnNames = ['lt', 'rt'];
 	let btns = {};
 	for (let i of btnNames) {
 		btns[i] = gamepad.button(i);
@@ -28,13 +20,13 @@ module.exports = async function(arg) {
 	let invert = {
 		x: 1,
 		y: 1,
-		z: 1
+		z: 1,
 	};
 	let gamepadConnected = false;
 	let inNuetralPos = {
 		x: true,
 		y: true,
-		z: true
+		z: true,
 	};
 	let stickDeadZone = 0.2;
 
@@ -45,7 +37,7 @@ module.exports = async function(arg) {
 		file = path.parse(file);
 		$('#' + file.name).prepend(html);
 	}
-	$(document).on('click', 'a[href^="http"]', function(event) {
+	$(document).on('click', 'a[href^="http"]', function (event) {
 		event.preventDefault();
 		opn(this.href);
 	});
@@ -64,9 +56,9 @@ module.exports = async function(arg) {
 			axises.push('z');
 		}
 	}
-	$('#gyroX').click(toggleAxis);
-	$('#gyroY').click(toggleAxis);
-	$('#gyroZ').click(toggleAxis);
+	$('#gyroX').on('click', toggleAxis);
+	$('#gyroY').on('click', toggleAxis);
+	$('#gyroZ').on('click', toggleAxis);
 
 	function toggleControls() {
 		let $btn = $(this);
@@ -81,16 +73,16 @@ module.exports = async function(arg) {
 		}
 		log(invert);
 	}
-	$('#invertX').click(toggleControls);
-	$('#invertY').click(toggleControls);
-	$('#invertZ').click(toggleControls);
+	$('#invertX').on('click', toggleControls);
+	$('#invertY').on('click', toggleControls);
+	$('#invertZ').on('click', toggleControls);
 
 	function toggleSpeedShifters() {
 		let $btn = $(this);
 		$btn.toggleClass('enabled');
 		speedShift = $btn.hasClass('enabled');
 	}
-	$('#speedShift').click(toggleSpeedShifters);
+	$('#speedShift').on('click', toggleSpeedShifters);
 
 	async function loop() {
 		if (gamepadConnected || gamepad.isConnected()) {
@@ -106,7 +98,7 @@ module.exports = async function(arg) {
 				if (btnStates[i] && query) {
 					// log(i + ' button press held');
 					if (i == 'lt') {
-						multi = .5;
+						multi = 0.5;
 					} else if (i == 'rt') {
 						multi = 5;
 					}
@@ -127,22 +119,21 @@ module.exports = async function(arg) {
 			let stickL = gamepad.stick('left').query();
 			let stickR = gamepad.stick('right').query();
 			let gyro = {
-				x: ((axises.includes('x')) ? stickR.y : 0),
-				y: ((axises.includes('y')) ? stickR.x : 0),
-				z: ((axises.includes('z')) ? stickL.x : 0)
+				x: axises.includes('x') ? stickR.y : 0,
+				y: axises.includes('y') ? stickR.x : 0,
+				z: axises.includes('z') ? stickL.x : 0,
 			};
 			for (axis of axises) {
-				if (gyro[axis] > .9) {
-					gyro[axis] = -250 * gyro[axis] + 208
+				if (gyro[axis] > 0.9) {
+					gyro[axis] = -250 * gyro[axis] + 208;
 					inNuetralPos[axis] = false;
-				} else if (gyro[axis] < -.9) {
-					gyro[axis] = -250 * gyro[axis] - 208
+				} else if (gyro[axis] < -0.9) {
+					gyro[axis] = -250 * gyro[axis] - 208;
 					inNuetralPos[axis] = false;
 				} else if (gyro[axis] < -stickDeadZone || gyro[axis] > stickDeadZone) {
 					gyro[axis] = -25 * Math.pow(gyro[axis], 3);
 					inNuetralPos[axis] = false;
-				} else if (gyro[axis] < stickDeadZone &&
-					gyro[axis] > -stickDeadZone) {
+				} else if (gyro[axis] < stickDeadZone && gyro[axis] > -stickDeadZone) {
 					inNuetralPos[axis] = true;
 				}
 				gyro[axis] *= invert[axis];
@@ -152,6 +143,7 @@ module.exports = async function(arg) {
 			}
 			gyro.y *= -1;
 			gyroServer.sendMotionData(gyro);
+			log(gyro);
 
 			if (!gamepadConnected) {
 				log('gamepad connected!');
@@ -165,25 +157,25 @@ module.exports = async function(arg) {
 	loop();
 
 	const wss = new WebSocket.Server({
-		port: 1337
+		port: 1337,
 	});
 
-	wss.on("connection", function connection(ws) {
-		log("WS Connected");
+	wss.on('connection', function connection(ws) {
+		log('WS Connected');
 		phoneIsConnected = true;
 		$('#phoneIndicator').text('Phone connected!');
-		ws.on("message", function incoming(message) {
+		ws.on('message', function incoming(message) {
 			// log(message);
 			data = JSON.parse(message);
 			gyroServer.sendMotionData(data.gyro, null, data.ts);
 		});
-		ws.on("error", () => {
+		ws.on('error', () => {
 			phoneIsConnected = false;
-			log("WS ERROR");
+			log('WS ERROR');
 		});
-		ws.on("close", () => {
+		ws.on('close', () => {
 			phoneIsConnected = false;
-			log("WS Disconnected");
+			log('WS Disconnected');
 			$('#phoneIndicator').text('Phone disconnected');
 		});
 	});
@@ -196,27 +188,27 @@ module.exports = async function(arg) {
 	// set up the template engine
 	xps.set('views', __root + '/views');
 	xps.set('view engine', 'pug');
-	xps.use("/js", express.static(path.join(__dirname, '../js')));
+	xps.use('/js', express.static(path.join(__dirname, '../js')));
 
 	// GET response for '/'
-	xps.get('/', function(req, res) {
+	xps.get('/', function (req, res) {
 		res.render('pug/client');
 	});
 
 	// start up the server
-	xps.listen(8080, function() {
+	xps.listen(8080, function () {
 		log(`
 ## Usage
 1. Run Cemu.exe and Checked Options->GamePad mation source->DSU1->By Slot
-2. Use your phone‘s browser (safair or chrome) open the following url`);
-		let interfaces = require("os").networkInterfaces();
+2. Use your phone's web browser to open the following url`);
+		let interfaces = require('os').networkInterfaces();
 		for (let k in interfaces) {
 			for (let i in interfaces[k]) {
 				if (
-					interfaces[k][i].family == "IPv4" &&
-					interfaces[k][i].address != "127.0.0.1"
+					interfaces[k][i].family == 'IPv4' &&
+					interfaces[k][i].address != '127.0.0.1'
 				) {
-					let url = "http://" + interfaces[k][i].address + ":8080";
+					let url = 'http://' + interfaces[k][i].address + ':8080';
 					log(url);
 					$('#phoneURL').text($('#phoneURL').text() + url + ' ');
 				}
@@ -224,7 +216,7 @@ module.exports = async function(arg) {
 		}
 	});
 
-	require('process').on('uncaughtException', function(err) {
-		log(err)
+	require('process').on('uncaughtException', function (err) {
+		log(err);
 	});
 };
