@@ -9,10 +9,7 @@
 	"build": {
 		"appId": "com.qashto.cemu-no-gyro",
 		"copyright": "Copyright © 2018-2021 Quinton Ashley",
-		"electronVersion": "7.1.1",
-		"electronDownload": {
-			"version": "7.1.1"
-		},
+		"electronVersion": "9.3.2",
 		"win": {
 			"target": [
 				{
@@ -72,7 +69,7 @@
 		"v": "npm version patch --force",
 		"version": "git add -A",
 		"postversion": "git push",
-		"V": "git push origin $npm_package_version && npm publish"
+		"V": "npm version minor --force"
 	},
-	"version": "1.0.18"
+	"version": "1.1.0"
 }
