@@ -1,5 +1,7 @@
 # cemu-no-gyro
 
+_DOES NOT WORK with Cemu ~v1.20 and above. I have not used this app myself in a long time and probably won't, sorry. If you'd like to get this app working with newer versions of Cemu send me a pull request with your own fixes or a donation with a message requesting I fix it._
+
 cemu-no-gyro lets you play motion control games without motion controls on Cemu.  It converts your controller's analog stick position values to faked gyro motion controls values and sends them to Cemu via cemuhook.  Although you can disable motion controls in some games like Splatoon, this app could be useful for games that require them.  For example, you could solve motion control puzzles in Legend of Zelda: Breath of the Wild using only an Xbox One controller with cemu-no-gyro!  You can also use your phone as a real motion control source without downloading an app via local web networking.  In BOTW if you disable motion control aiming you can keep cemu-no-gyro running at all times, not just during shrines.  It will have no effect on playing the rest of the game.
 
 ## Usage
@@ -21,6 +23,12 @@ cemu-no-gyro lets you play motion control games without motion controls on Cemu.
 ## Settings
 
 You can individually toggle on/off each axis of gyro rotation and toggle normal or inverted controls.  In addition to fine grain control with the analog sticks you can hold the left trigger for half speed and hold the right trigger for 5x speed.  You can toggle the trigger speed shift functionality on/off too.
+
+## My thoughts on Motion Controls
+
+I really hope that the next Xbox controller will have motion controls because I want to play games like Splatoon with a gyro. I prefer the Gamecube/Xbox style stick layout and the Xbox One controller feels the best in my hands but it's unfortunate they lack a gyro for fine grain motion control. Even though I made cemu-no-gyro, I wish it wasn't necessary.
+
+Watch this video ["Motion Control and the Rejection of Progress"](https://youtu.be/binPB4YbWmM) by Nerrel for more info.
 
 ## Please consider donating!
 
