@@ -30,13 +30,14 @@ Watch this video ["Motion Control and the Rejection of Progress"](https://youtu.
 
 ## Please consider donating!
 
-If you appreciate my work and will continue to use this app please pay for it by donating an amount of your choosing. Thank you!
+If you appreciate my work and will continue to use this app please pay an amount of your choosing. Thank you!
 
 Monthly Donations:  
 Patreon: <https://www.patreon.com/qashto>
 
 Single Donation:  
 Paypal: <https://www.paypal.me/qashto/5>
+Venmo: @Quinton-Ashley
 
 ## Credits
 
