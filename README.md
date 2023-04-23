@@ -1,10 +1,8 @@
 # cemu-no-gyro
 
-## NOTICE: several users have reported the app no longer works for various reasons, unfortunately I can't fix the issues RIP cemu-no-gyro
+## NOTICE: The phone gyro portion of the app doesn't work anymore due to new (2023) web browser security restrictions that prevent motion control data from being sent over http connections. If you have an idea for a workaround for this let me know or submit a pull request with changes.
 
-## I reccomend ditching your Xbox controller and using the [GuliKit KingKong 2 Pro Controller](https://www.aliexpress.com/item/1005003624801819.html) (not sponsored)
-
-
+## As of 2023, I reccomend using the [GuliKit KingKong 2 Pro Controller](https://www.aliexpress.com/item/1005003624801819.html) it has a real gyro and imo its better than all official Xbox, PlayStation, and Nintendo controllers. (not sponsored)
 
 cemu-no-gyro lets you play motion control games without motion controls on Cemu. It converts your controller's analog stick position values to faked gyro motion controls values and sends them to Cemu via cemuhook. Although you can disable motion controls in some games like Splatoon, this app could be useful for games that require them. For example, you could solve motion control puzzles in Legend of Zelda: Breath of the Wild using only an Xbox One controller with cemu-no-gyro! You can also use your phone as a real motion control source without downloading an app via local web networking. In BOTW if you disable motion control aiming you can keep cemu-no-gyro running at all times, not just during shrines. It will have no effect on playing the rest of the game.
 
