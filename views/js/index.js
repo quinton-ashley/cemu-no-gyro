@@ -6,7 +6,6 @@ module.exports = async function (arg) {
 	const { Mouse, Keyboard, Gamepad, or, and } = require('contro');
 	let gamepad = new Gamepad();
 
-	const http = require('http');
 	const WebSocket = require('ws');
 
 	let btnNames = ['lt', 'rt'];
@@ -60,7 +59,7 @@ module.exports = async function (arg) {
 	$('#gyroY').on('click', toggleAxis);
 	$('#gyroZ').on('click', toggleAxis);
 
-	function toggleControls() {
+	function toggleControls() {f
 		let $btn = $(this);
 		let axis = $btn.attr('id')[6].toLowerCase();
 		$btn.toggleClass('enabled');
@@ -156,10 +155,42 @@ module.exports = async function (arg) {
 
 	loop();
 
-	const wss = new WebSocket.Server({
-		port: 1337,
-	});
+	/////////////////////////////////////////////////
 
+	let express = require('express');
+	let xps = express();
+	// set up the template engine
+	xps.set('views', __root + '/views');
+	xps.set('view engine', 'pug');
+	xps.use('/js', express.static(path.join(__dirname, '../js')));
+
+	// GET response for '/'
+	xps.get('/', function (req, res) {
+		res.render('pug/client');
+	});
+	const https = require("https");
+	const httpsOptions = require('./cert');
+	const server = https.createServer(httpsOptions, xps);
+	server.listen(8443, function () {
+		log(`
+## Usage
+1. Run Cemu.exe and Checked Options->GamePad mation source->DSU1->By Slot
+2. Use your phone's web browser to open the following url`);
+		let interfaces = require('os').networkInterfaces();
+		for (let k in interfaces) {
+			for (let i in interfaces[k]) {
+				if (
+					interfaces[k][i].family == 'IPv4' &&
+					interfaces[k][i].address != '127.0.0.1'
+				) {
+					let url = 'https://' + interfaces[k][i].address + ':8443';
+					log(url);
+					$('#phoneURL').text($('#phoneURL').text() + url + ' ');
+				}
+			}
+		}
+	});
+	const wss = new WebSocket.Server({server, path: '/wss'});
 	wss.on('connection', function connection(ws) {
 		log('WS Connected');
 		phoneIsConnected = true;
@@ -179,42 +210,7 @@ module.exports = async function (arg) {
 			$('#phoneIndicator').text('Phone disconnected');
 		});
 	});
-
-	/////////////////////////////////////////////////
-
-	let express = require('express');
-	let xps = express();
-
-	// set up the template engine
-	xps.set('views', __root + '/views');
-	xps.set('view engine', 'pug');
-	xps.use('/js', express.static(path.join(__dirname, '../js')));
-
-	// GET response for '/'
-	xps.get('/', function (req, res) {
-		res.render('pug/client');
-	});
-
-	// start up the server
-	xps.listen(8080, function () {
-		log(`
-## Usage
-1. Run Cemu.exe and Checked Options->GamePad mation source->DSU1->By Slot
-2. Use your phone's web browser to open the following url`);
-		let interfaces = require('os').networkInterfaces();
-		for (let k in interfaces) {
-			for (let i in interfaces[k]) {
-				if (
-					interfaces[k][i].family == 'IPv4' &&
-					interfaces[k][i].address != '127.0.0.1'
-				) {
-					let url = 'http://' + interfaces[k][i].address + ':8080';
-					log(url);
-					$('#phoneURL').text($('#phoneURL').text() + url + ' ');
-				}
-			}
-		}
-	});
+	
 
 	require('process').on('uncaughtException', function (err) {
 		log(err);

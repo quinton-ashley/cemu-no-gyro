@@ -54,8 +54,6 @@ module.exports = async function(arg) {
 		return;
 	}
 
-	global.electron = require('electron').remote;
-	global.app = electron.app;
 	global.dialog = {};
 
 	dialog.select = async function(opt) {
