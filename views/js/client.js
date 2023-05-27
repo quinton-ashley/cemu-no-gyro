@@ -16,7 +16,7 @@ function screenChange(val) {
 }
 var time = 0;
 var bar = window.location.href;
-var wsAddress = `ws://${bar.match(/^https?:\/\/([^:]+).+$/)[1]}:1337`;
+var wsAddress = `wss://${bar.match(/^https?:\/\/([^:]+).+$/)[1]}:8443/wss`;
 console.log(wsAddress);
 var ws = new WebSocket(wsAddress);
 ws.onopen = function(ws_evnt) {
