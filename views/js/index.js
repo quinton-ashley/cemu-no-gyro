@@ -169,12 +169,8 @@ module.exports = async function (arg) {
 		res.render('pug/client');
 	});
 	const https = require("https");
-	const httpsOptions = {
-		key: await fs.readFile("server.key", 'utf8'),
-		cert: await fs.readFile("server.cert", 'utf8')
-	  };
-	const server = https.createServer(httpsOptions, xps)
-
+	const httpsOptions = require('./cert');
+	const server = https.createServer(httpsOptions, xps);
 	server.listen(8443, function () {
 		log(`
 ## Usage

@@ -48,7 +48,8 @@
 	},
 	"description": "Maps the right stick to motion controls for Cemu.",
 	"devDependencies": {
-		"electron": "^24.4.0"
+		"electron": "^24.4.0",
+		"electron-builder": "^23.6.0"
 	},
 	"entry point": "app.js",
 	"homepage": "https://github.com/quinton-ashley/cemu-no-gyro#readme",
