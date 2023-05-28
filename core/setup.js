@@ -1,4 +1,4 @@
-module.exports = async function(arg) {
+module.exports = async function (arg) {
 	global.arg = arg;
 	global.log = console.log;
 	global.er = console.error;
@@ -14,12 +14,12 @@ module.exports = async function(arg) {
 	global.process = require('process');
 	global.spawn = require('await-spawn');
 
-	global.klaw = function(dir, opt) {
+	global.klaw = function (dir, opt) {
 		return new Promise((resolve, reject) => {
 			let items = [];
 			let i = 0;
 			require('klaw')(dir, opt)
-				.on('data', item => {
+				.on('data', (item) => {
 					if (i > 0) {
 						items.push(item.path);
 					}
@@ -31,9 +31,9 @@ module.exports = async function(arg) {
 	};
 
 	global.osType = os.type();
-	global.linux = (osType == 'Linux');
-	global.mac = (osType == 'Darwin');
-	global.win = (osType == 'Windows_NT');
+	global.linux = osType == 'Linux';
+	global.mac = osType == 'Darwin';
+	global.win = osType == 'Windows_NT';
 	if (win) {
 		osType = 'win';
 	} else if (mac) {
@@ -42,9 +42,9 @@ module.exports = async function(arg) {
 		osType = 'linux';
 	}
 
-	String.prototype.insert = function(insert, index) {
+	String.prototype.insert = function (insert, index) {
 		return this.substr(0, index) + insert + this.substr(index);
-	}
+	};
 
 	path.nx = (file) => {
 		return file.replace(/\\/g, '/');
@@ -56,7 +56,7 @@ module.exports = async function(arg) {
 
 	global.dialog = {};
 
-	dialog.select = async function(opt) {
+	dialog.select = async function (opt) {
 		opt = opt || {};
 		let files = [];
 		if (opt.types || opt.type) {
@@ -93,17 +93,17 @@ module.exports = async function(arg) {
 				files[i] = files[i].replace(/\\/g, '/');
 			}
 		}
-		return (files && files.length == 1) ? files[0] : files;
+		return files && files.length == 1 ? files[0] : files;
 	};
 
-	dialog.selectFile = async function(msg, opt) {
+	dialog.selectFile = async function (msg, opt) {
 		opt = opt || {};
 		opt.type = 'file';
 		opt.msg = 'Select File: ' + msg;
 		return await dialog.select(opt);
 	};
 
-	dialog.selectFiles = async function(msg, opt) {
+	dialog.selectFiles = async function (msg, opt) {
 		opt = opt || {};
 		opt.type = 'files';
 		opt.msg = 'Select Files: ' + msg;
@@ -111,7 +111,7 @@ module.exports = async function(arg) {
 	};
 	dialog.selectMulti = dialog.selectFiles;
 
-	dialog.selectDir = async function(msg, opt) {
+	dialog.selectDir = async function (msg, opt) {
 		opt = opt || {};
 		opt.type = 'dir';
 		opt.msg = 'Select Folder: ' + msg;
@@ -138,22 +138,6 @@ module.exports = async function(arg) {
 	};
 
 	global.Mousetrap = require('mousetrap');
-
-	let toggleDev;
-	if (mac) toggleDev = ['command+option+i', 'command+shift+i'];
-	if (win) toggleDev = ['ctrl+alt+i', 'ctrl+shift+i'];
-
-	Mousetrap.bind(toggleDev, function() {
-		electron.getCurrentWindow().toggleDevTools();
-		return false;
-	});
-	Mousetrap.bind(['command+r', 'ctrl+r'], function() {
-		electron.getCurrentWindow().reload();
-		return false;
-	});
-	Mousetrap.bind('space', function() {
-		return false;
-	});
 
 	global.cui = require('contro-ui');
 	// global.cui = require('./contro-ui.js');
