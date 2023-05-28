@@ -29,13 +29,12 @@ module.exports = async function (arg) {
 	};
 	let stickDeadZone = 0.2;
 
-	let files = await klaw(path.join(__root, '/views/md'));
-	for (let file of files) {
-		let html = await fs.readFile(file, 'utf8');
-		html = '<div class="md">' + md(html) + '</div>';
-		file = path.parse(file);
-		$('#' + file.name).prepend(html);
-	}
+	let file = path.join(__root, '/views/md/setup.md');
+	let html = await fs.readFile(file, 'utf8');
+	html = '<div class="md">' + md(html) + '</div>';
+	file = path.parse(file);
+	$('#' + file.name).prepend(html);
+
 	$(document).on('click', 'a[href^="http"]', function (event) {
 		event.preventDefault();
 		opn(this.href);
@@ -173,7 +172,7 @@ module.exports = async function (arg) {
 	const server = https.createServer(httpsOptions, xps);
 	server.listen(8443, function () {
 		log(`
-## Usage
+Usage
 1. Run Cemu.exe and Checked Options->GamePad mation source->DSU1->By Slot
 2. Use your phone's web browser to open the following url`);
 		let interfaces = require('os').networkInterfaces();

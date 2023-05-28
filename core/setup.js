@@ -14,22 +14,6 @@ module.exports = async function (arg) {
 	global.process = require('process');
 	global.spawn = require('await-spawn');
 
-	global.klaw = function (dir, opt) {
-		return new Promise((resolve, reject) => {
-			let items = [];
-			let i = 0;
-			require('klaw')(dir, opt)
-				.on('data', (item) => {
-					if (i > 0) {
-						items.push(item.path);
-					}
-					i++;
-				})
-				.on('end', () => resolve(items))
-				.on('error', (err, item) => reject(err, item));
-		});
-	};
-
 	global.osType = os.type();
 	global.linux = osType == 'Linux';
 	global.mac = osType == 'Darwin';

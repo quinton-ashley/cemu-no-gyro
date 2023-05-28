@@ -90,6 +90,7 @@
 	"scripts": {
 		"start": "electron . --dev",
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"dist": "electron-builder -l | electron-builder -m | electron-builder -w",
 		"dist-l": "electron-builder -l",
 		"dist-m": "electron-builder -m",
 		"dist-w": "electron-builder -w",
@@ -98,5 +99,5 @@
 		"postversion": "git push",
 		"V": "npm version minor --force"
 	},
-	"version": "1.1.4"
+	"version": "1.1.5"
 }
