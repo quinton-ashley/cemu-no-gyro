@@ -8,8 +8,30 @@
 	},
 	"build": {
 		"appId": "com.qashto.cemu-no-gyro",
-		"copyright": "Copyright © 2018-2021 Quinton Ashley",
+		"copyright": "Copyright © 2018-2023 Quinton Ashley",
 		"electronVersion": "13.1.7",
+		"mac": {
+			"category": "public.app-category.game",
+			"target": [
+				{
+					"target": "7z",
+					"arch": [
+						"arm64"
+					]
+				}
+			]
+		},
+		"linux": {
+			"category": "Utility",
+			"target": [
+				{
+					"target": "AppImage",
+					"arch": [
+						"x64"
+					]
+				}
+			]
+		},
 		"win": {
 			"target": [
 				{
@@ -46,7 +68,7 @@
 		"tether": "^2.0.0",
 		"ws": "^8.1.0"
 	},
-	"description": "Maps the right stick to motion controls for Cemu.",
+	"description": "Maps controller sticks to motion controls for Cemu.",
 	"devDependencies": {
 		"electron": "^24.4.0",
 		"electron-builder": "^23.6.0"
@@ -68,11 +90,13 @@
 	"scripts": {
 		"start": "electron . --dev",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dist": "electron-builder -w",
+		"dist-l": "electron-builder -l",
+		"dist-m": "electron-builder -m",
+		"dist-w": "electron-builder -w",
 		"v": "npm version patch --force",
 		"version": "git add -A",
 		"postversion": "git push",
 		"V": "npm version minor --force"
 	},
-	"version": "1.1.1"
+	"version": "1.1.2"
 }

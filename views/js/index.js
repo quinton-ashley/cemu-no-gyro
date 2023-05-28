@@ -19,13 +19,13 @@ module.exports = async function (arg) {
 	let invert = {
 		x: 1,
 		y: 1,
-		z: 1,
+		z: 1
 	};
 	let gamepadConnected = false;
 	let inNuetralPos = {
 		x: true,
 		y: true,
-		z: true,
+		z: true
 	};
 	let stickDeadZone = 0.2;
 
@@ -59,7 +59,7 @@ module.exports = async function (arg) {
 	$('#gyroY').on('click', toggleAxis);
 	$('#gyroZ').on('click', toggleAxis);
 
-	function toggleControls() {f
+	function toggleControls() {
 		let $btn = $(this);
 		let axis = $btn.attr('id')[6].toLowerCase();
 		$btn.toggleClass('enabled');
@@ -120,7 +120,7 @@ module.exports = async function (arg) {
 			let gyro = {
 				x: axises.includes('x') ? stickR.y : 0,
 				y: axises.includes('y') ? stickR.x : 0,
-				z: axises.includes('z') ? stickL.x : 0,
+				z: axises.includes('z') ? stickL.x : 0
 			};
 			for (axis of axises) {
 				if (gyro[axis] > 0.9) {
@@ -168,7 +168,7 @@ module.exports = async function (arg) {
 	xps.get('/', function (req, res) {
 		res.render('pug/client');
 	});
-	const https = require("https");
+	const https = require('https');
 	const httpsOptions = require('./cert');
 	const server = https.createServer(httpsOptions, xps);
 	server.listen(8443, function () {
@@ -179,10 +179,7 @@ module.exports = async function (arg) {
 		let interfaces = require('os').networkInterfaces();
 		for (let k in interfaces) {
 			for (let i in interfaces[k]) {
-				if (
-					interfaces[k][i].family == 'IPv4' &&
-					interfaces[k][i].address != '127.0.0.1'
-				) {
+				if (interfaces[k][i].family == 'IPv4' && interfaces[k][i].address != '127.0.0.1') {
 					let url = 'https://' + interfaces[k][i].address + ':8443';
 					log(url);
 					$('#phoneURL').text($('#phoneURL').text() + url + ' ');
@@ -190,7 +187,7 @@ module.exports = async function (arg) {
 			}
 		}
 	});
-	const wss = new WebSocket.Server({server, path: '/wss'});
+	const wss = new WebSocket.Server({ server, path: '/wss' });
 	wss.on('connection', function connection(ws) {
 		log('WS Connected');
 		phoneIsConnected = true;
@@ -210,7 +207,6 @@ module.exports = async function (arg) {
 			$('#phoneIndicator').text('Phone disconnected');
 		});
 	});
-	
 
 	require('process').on('uncaughtException', function (err) {
 		log(err);
