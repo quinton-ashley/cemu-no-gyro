@@ -25,12 +25,12 @@
 		try {
 			const locals = {
 				arg: JSON.stringify(arg),
-				node_modules: path.join(arg.__root, 'node_modules').replace(/\\/g, '/'),
+				node_modules: path.join(arg.__root, 'node_modules').replace(/\\/g, '/')
 			};
 			log(locals);
 			let pug = await setupPug(
 				{
-					pretty: true,
+					pretty: true
 				},
 				locals
 			);
@@ -46,11 +46,11 @@
 				contextIsolation: false,
 				enableRemoteModule: true,
 				nodeIntegration: true,
-				webviewTag: true,
+				webviewTag: true
 			},
+			width: 600,
+			height: 600
 		};
-		windowPrms.width = 3840 / 4;
-		windowPrms.height = 2160 / 2;
 
 		mainWindow = new BrowserWindow(windowPrms);
 

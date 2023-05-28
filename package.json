@@ -51,7 +51,7 @@
 		"await-spawn": "^4.0.2",
 		"bootstrap": "^5.1.0",
 		"contro": "^2.2.0",
-		"contro-ui": "^3.3.5",
+		"contro-ui": "^3.3.17",
 		"crc": "^3.5.0",
 		"delay": "^5.0.0",
 		"electron-pug": "^2.0.0",
@@ -98,5 +98,5 @@
 		"postversion": "git push",
 		"V": "npm version minor --force"
 	},
-	"version": "1.1.2"
+	"version": "1.1.3"
 }

@@ -20,3 +20,7 @@ a,
 a:hover {
 	color: #0cc;
 }
+
+h2 {
+	padding-top: 16px;
+}
