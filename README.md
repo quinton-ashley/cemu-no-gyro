@@ -26,9 +26,9 @@ You can individually toggle on/off each axis of gyro rotation and toggle normal 
 
 ## My thoughts on Motion Controls
 
-I really hope that the next Xbox controller will have motion controls because I want to play games like BOTW and Splatoon with a gyro. I prefer the Gamecube/Xbox style stick layout and the Xbox One controller feels better in my adult sized hands then Switch Pro controllers, but it's unfortunate they lack a gyro for fine grain motion control. Even though I made cemu-no-gyro, I wish it wasn't necessary.
+I really hope that the next Xbox controller will have motion controls because I want to play games like BOTW and Splatoon with a gyro. I prefer the Gamecube/Xbox style stick layout and the Xbox One controller feels better in my adult sized hands than Switch Pro controllers, but it's unfortunate they lack a gyro for fine grain motion control. Even though I made cemu-no-gyro, I wish it wasn't necessary.
 
-Watch this video ["Motion Control and the Rejection of Progress"](https://youtu.be/binPB4YbWmM) by Nerrel for more info.
+Watch this video ["Motion Control and the Rejection of Progress"](https://youtu.be/binPB4YbWmM) by Nerrel to learn why motion controls are actually good.
 
 ## Please consider donating!
 
